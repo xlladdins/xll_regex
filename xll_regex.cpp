@@ -40,3 +40,27 @@ LPOPER WINAPI xll_regex_search(xcstr regex, xcstr str)
 
 	return &o;
 }
+
+#ifdef _DEBUG
+
+#define XLL_REGEX_TEST(X) \
+	X(_T(".*"), _T("abc"), _T("abc")) \
+
+int xll_regex_test()
+{
+	try {
+#define RE_TEST(a, b, ...) ensure(*xll_regex_search(a, b) == OPER::make(__VA_ARGS__));
+		XLL_REGEX_TEST(RE_TEST)
+#undef RE_TEST
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+
+		return FALSE;
+	}
+
+	return TRUE;
+}
+Auto<OpenAfter> xaoa_regex_test(xll_regex_test);
+
+#endif // _DEBUG
