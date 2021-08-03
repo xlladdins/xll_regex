@@ -15,12 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="xll_template.cpp">
+    <ClCompile Include="xll_regex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="xll_template.h">
+    <ClInclude Include="xll_regex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
