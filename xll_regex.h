@@ -35,5 +35,4 @@ X(MATCH_NOT_EOW, match_not_eow, "do not treat the past the end position in the t
 X(MATCH_NOT_NULL, match_not_null, "do not treat an empty subsequence as a match") \
 X(MATCH_PREV_AVAIL, match_prev_avail, "first is a valid iterator; ignore match_not_bol and match_not_bow if set") \
 
-
 // REGEX_CONSTANTS_ERROR
