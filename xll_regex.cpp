@@ -109,6 +109,59 @@ LPOPER WINAPI xll_regex_search(const LPOPER pre, xcstr str, std::regex_constants
 	return &o;
 }
 
+
+AddIn xai_regex_replace(
+	Function(XLL_LPOPER, "xll_regex_replace", "REGEX.REPLACE")
+	.Arguments({
+		Arg(XLL_LPOPER, "regex", "is a regular expression or handle.",
+			".(b)."),
+		Arg(XLL_CSTRING, "string", "is a string.",
+			"abc"),
+		Arg(XLL_CSTRING, "replace", "is the replacement text.",
+			"$1"),
+		Arg(XLL_LONG, "flags", "are optional flags from the REGEX_MATCH_* enumeration.",
+			"=REGEX_MATCH_DEFAULT()")
+		})
+	.Category("Regex")
+	.FunctionHelp("Replaces matched regular expressions.")
+	.HelpTopic("https://docs.microsoft.com/en-us/cpp/standard-library/regex-functions#regex_replace")
+	.Documentation(R"(
+Search <code>string</code> for matching results of
+regular expression <code>regex</code> and replace them with <code>replace</code>.
+)")
+);
+LPOPER WINAPI xll_regex_replace(const LPOPER pre, xcstr str, xcstr replace, std::regex_constants::match_flag_type flags)
+{
+#pragma XLLEXPORT
+	static OPER o;
+
+	try {
+		o = "";
+
+		if (pre->is_num()) {
+			handle<std::basic_regex<xchar>> re_(pre->as_num());
+			if (re_) {
+				o = std::regex_replace(str, *re_, replace, flags).c_str();
+			}
+		}
+		else if (pre->is_str()) {
+			std::basic_regex<xchar> re(pre->val.str + 1, pre->val.str[0]);
+			o = std::regex_replace(str, re, replace, flags).c_str();
+		}
+		else {
+			o = ErrValue;
+		}
+
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+
+		o = ErrNA;
+	}
+
+	return &o;
+}
+
 #ifdef _DEBUG
 
 #define XLL_REGEX_TEST(X) \
