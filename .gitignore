@@ -8,3 +8,9 @@
 /Release
 /x64/Release
 /.vs
+/x32/xll_regex.exp
+/x32/xll_regex.lib
+/x32/xll_regex.pdb
+/x64/xll_regex.exp
+/x64/xll_regex.lib
+/x64/xll_regex.pdb
